@@ -11,6 +11,8 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
 /**
+ * demo from
+ * http://blog.csdn.net/haoyuyang/article/details/53469269
  * test zk client demo
  * Created by zuoshuai on 2018/3/8.
  */
