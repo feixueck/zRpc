@@ -27,38 +27,48 @@ public class ZkClient {
 //        nodeListenerCache();
         //第三个参数表示是否接收节点数据内容  
         PathChildrenCache childrenCache = new PathChildrenCache(curator, ZConstants.ZRPC_TEST_PATH, true);
-        childrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
         childrenCache.getListenable().addListener((framework, event) -> {
             switch (event.getType()) {
                 case CHILD_ADDED:
-                    System.out.println("CHILD_ADDED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
+                    System.out.println(Thread.currentThread().getName() + "CHILD_ADDED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
                             new String(event.getData().getData()) + "，状态：" + event.getData().getStat());
+                    System.err.println(childrenCache.getCurrentData().size());
                     break;
                 case CHILD_UPDATED:
-                    System.out.println("CHILD_UPDATED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
+                    System.out.println(Thread.currentThread().getName() + "CHILD_UPDATED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
                             new String(event.getData().getData()) + "，状态：" + event.getData().getStat());
                     break;
                 case CHILD_REMOVED:
-                    System.out.println("CHILD_REMOVED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
+                    System.out.println(Thread.currentThread().getName() + "CHILD_REMOVED，类型：" + event.getType() + "，路径：" + event.getData().getPath() + "，数据：" +
                             new String(event.getData().getData()) + "，状态：" + event.getData().getStat());
                     break;
                 default:
                     break;
             }
         });
+        childrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
+
         //clean evn
         Stat stat = curator.checkExists().forPath(ZConstants.ZRPC_TEST_PATH);
         if (stat != null) {
-            curator.delete().deletingChildrenIfNeeded().forPath(ZConstants.ZRPC_TEST_PATH);
+            curator.delete().guaranteed().deletingChildrenIfNeeded().forPath(ZConstants.ZRPC_TEST_PATH);
+            System.out.println("=== del succ ====");
         }
+        System.err.println(stat);
         //
-        curator.create().forPath(ZConstants.ZRPC_TEST_PATH, "123".getBytes());
+//        curator.create().forPath(ZConstants.ZRPC_TEST_PATH, "123".getBytes());
         curator.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(ZConstants.ZRPC_TEST_PATH + "/c1", "c1内容".getBytes());
         //经测试，不会监听到本节点的数据变更，只会监听到指定节点下子节点数据的变更  
-        curator.setData().forPath(ZConstants.ZRPC_TEST_PATH, "456".getBytes());
+//        curator.setData().forPath(ZConstants.ZRPC_TEST_PATH, "456".getBytes());
         curator.setData().forPath(ZConstants.ZRPC_TEST_PATH + "/c1", "c1新内容".getBytes());
-        curator.delete().guaranteed().deletingChildrenIfNeeded().forPath(ZConstants.ZRPC_TEST_PATH);
+//        childrenCache.getCurrentData().forEach(ch -> System.err.println(ch.getPath()));
+
+//        curator.delete().guaranteed().deletingChildrenIfNeeded().forPath(ZConstants.ZRPC_TEST_PATH);
         System.in.read();
+//        for (int i = 0; i < 10; i++) {
+//            Thread.sleep(2000);
+//            System.out.println("=== wait ===");
+//        }
     }
 
     private static void nodeListenerCache(CuratorFramework curator) throws Exception {
