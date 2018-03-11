@@ -2,6 +2,7 @@ package com.zuosh.rpc.server;
 
 import com.google.common.collect.Maps;
 import com.zuosh.rpc.common.ZConstants;
+import com.zuosh.rpc.protocol.DefaultProtocol;
 import com.zuosh.rpc.protocol.Invocation;
 import com.zuosh.rpc.protocol.Invoker;
 import com.zuosh.rpc.protocol.ServerInvoker;
@@ -45,8 +46,8 @@ public class ZkDirectory implements NotifyListener {
         //
         String name = serviceUrl.getPath();
         //
-//        invokersMap.putIfAbsent(name, new DefaultProtocol().refer(serviceUrl.getClass(), serviceUrl));
-        invokersMap.putIfAbsent(name, new ServerInvoker(null));
+        invokersMap.putIfAbsent(name, new DefaultProtocol().refer(serviceUrl.getClass(), serviceUrl));
+//        invokersMap.putIfAbsent(name, new ServerInvoker(null));
     }
 
     /**

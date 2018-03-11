@@ -17,26 +17,26 @@ public class UserConsumerTest {
         serviceUrl.setParameters(null);
         //
         ZkServer zkServer = new ZkServer();
-        zkServer.startService();
-        //
-        ZkDirectory directory = new ZkDirectory();
-        //
-        zkServer.subscribe(serviceUrl);
-        //
-        Invocation invocation = new Invocation();
-        invocation.setServiceUrl(serviceUrl);
-        invocation.setClazz(UserService.class);
-        invocation.setServiceName(UserService.class.getSimpleName());
-        invocation.setParameterTypes(new Class[]{String.class});
-        invocation.setMethodName("sayHello");
-        invocation.setArguments(new Object[]{"thx,judy"});
-        //
         ZkDirectory zkDirectory = zkServer.getZkDirectory();
-        try {
-            Object invoke = zkDirectory.getInvoker(serviceUrl).invoke(invocation);
-            System.out.println(invoke);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        //
+        zkServer.subscribe(UserService.class);//订阅指定服务
+        //
+        for (int i = 0; i < 5; i++) {
+            Invocation invocation = new Invocation();
+            invocation.setServiceUrl(serviceUrl);
+            invocation.setClazz(UserService.class);
+            invocation.setServiceName(UserService.class.getSimpleName());
+            invocation.setParameterTypes(new Class[]{String.class});
+            invocation.setMethodName("sayHello");
+            invocation.setArguments(new Object[]{"thx,judy" + i});
+            //
+            try {
+                Object invoke = zkDirectory.getInvoker(serviceUrl).invoke(invocation);
+                System.out.println(invoke);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         //
         System.in.read();

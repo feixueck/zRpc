@@ -1,17 +1,19 @@
 package com.zuosh.rpc.protocol;
 
+import com.zuosh.rpc.common.ZConstants;
+
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Request implements Serializable {
     private long msgId;
     private Invocation invocation;
-    private AtomicLong autoGen = new AtomicLong(0);
+    public static AtomicLong autoGen = new AtomicLong(0);
     private String msg;
     //
 
     public Request() {
-        msgId = this.autoGen.incrementAndGet();
+        this.msgId = Request.autoGen.incrementAndGet();
     }
 
     /**
@@ -37,6 +39,7 @@ public class Request implements Serializable {
         Request request = new Request();
         request.setMsg(msg);
         request.setInvocation(invocation);
+        ZConstants.LOGGER.info(" Request build ok ,id: {}", request.getMsgId());
         return request;
     }
 

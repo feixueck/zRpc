@@ -9,7 +9,7 @@ public class Invocation implements Serializable {
     private String host;//主机地址
     private int port;
     private String params;//相关参数
-    //
+    //=====下面参数是暂时能用得到的 ,上面的暂时备用
     private ServiceUrl serviceUrl;
     private Class<?>[] parameterTypes;
     private Class<?> clazz;

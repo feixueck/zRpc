@@ -84,6 +84,7 @@ public class ZkClient {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            //// TODO: 2018/3/11 监控指定节点 ,那么如果该节点删除,则要删掉invoker 
             childrenCache.getListenable().addListener(new PathChildrenCacheListener() {
                 @Override
                 public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
