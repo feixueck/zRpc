@@ -7,7 +7,7 @@ import io.netty.channel.Channel;
 import java.util.Map;
 
 public class NettyChannel {
-    //prover  和 consumer 的可以放在一起 ,因为两种channel不一样
+    //prover  和 consumer  通用一个
     public static Map<Channel, NettyChannel> channelsMap = Maps.newHashMap();
     private Channel channel;
 
