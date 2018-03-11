@@ -12,16 +12,16 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.utils.ZKPaths;
-import org.apache.logging.log4j.LogManager;
 import org.apache.zookeeper.CreateMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 public class ZkServer implements Zk {
-    public static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(ZkServer.class);
+    public static Logger LOGGER = LoggerFactory.getLogger(ZkServer.class);
     private static Set<String> allProviders = Sets.newHashSet();//服务提供者
     private ZkDirectory zkDirectory = new ZkDirectory();//注册的服务目录
     private static Set<String> subscribers = Sets.newHashSet();//订阅者
@@ -187,5 +187,10 @@ public class ZkServer implements Zk {
         zkDirectory.notify(url);
         //
         zkClient.addListener(url);
+    }
+    //
+
+    public ZkDirectory getZkDirectory() {
+        return zkDirectory;
     }
 }

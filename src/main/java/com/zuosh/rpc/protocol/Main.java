@@ -3,6 +3,27 @@ package com.zuosh.rpc.protocol;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         //
+//        testInvoke();
+        ResponseFuture future = new ResponseFuture(10L);
+        //
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+//                future.receive(Response.buildResponse(null, "normal response"));
+            }
+        }).start();
+        Response response = future.get();
+        System.out.println(response.getMsg());
+        //
+
+    }
+
+    private static void testInvoke() throws InterruptedException {
         Invoker invoker = new Invoker() {
             @Override
             public Object invoke(Invocation invocation) throws InterruptedException {

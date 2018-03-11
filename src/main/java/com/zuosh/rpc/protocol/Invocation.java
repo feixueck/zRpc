@@ -2,14 +2,51 @@ package com.zuosh.rpc.protocol;
 
 import com.zuosh.rpc.server.ServiceUrl;
 
-public class Invocation {
+import java.io.Serializable;
+
+public class Invocation implements Serializable {
     private String serviceName;//服务名
     private String host;//主机地址
     private int port;
     private String params;//相关参数
     //
     private ServiceUrl serviceUrl;
+    private Class<?>[] parameterTypes;
+    private Class<?> clazz;
+    private String methodName;//方法名
+    private Object[] arguments;//参数
 
+    public Class<?> getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Class<?> clazz) {
+        this.clazz = clazz;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public Object[] getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Object[] arguments) {
+        this.arguments = arguments;
+    }
+
+    public Class<?>[] getParameterTypes() {
+        return parameterTypes;
+    }
+
+    public void setParameterTypes(Class<?>[] parameterTypes) {
+        this.parameterTypes = parameterTypes;
+    }
 
     public ServiceUrl getServiceUrl() {
         return serviceUrl;

@@ -92,7 +92,10 @@ public class ZkClient {
                                 ZConstants.LOGGER.info(" zkClient 监听道事件 add ,路径是 :{}", data.getPath());
                                 break;
                             case CHILD_REMOVED:
-                                ZConstants.LOGGER.info(" zkClient 监听道事件 remove ,路径是 :{}", data.getPath());
+                                ZConstants.LOGGER.info(" zkClient 监听道事件 remove ,路径是 :{} ,从订阅列表删掉", data.getPath());
+                                //此时应当删除订阅的服务
+                                server.zkListeners.remove(serviceUrl);
+                                // TODO: 2018/3/10 目录列表中删除
                                 break;
                             case CONNECTION_RECONNECTED:
                                 ZConstants.LOGGER.info(" zkClient 监听道事件 reconnect ,路径是 :{},发送通知", data.getPath());

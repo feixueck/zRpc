@@ -3,7 +3,9 @@ package com.zuosh.rpc.server;
 import com.zuosh.rpc.common.ZConstants;
 import org.apache.curator.utils.ZKPaths;
 
-public class ServiceUrl<T> {
+import java.io.Serializable;
+
+public class ServiceUrl<T> implements Serializable {
     //
     private Class<T> aClass;
     //
@@ -15,7 +17,7 @@ public class ServiceUrl<T> {
     //
     public String getPath() {
         //
-        return ZKPaths.makePath(ZConstants.RPC_ROOT_PATH, aClass.getName());
+        return ZKPaths.makePath(ZConstants.RPC_ROOT_PATH, aClass.getSimpleName());
     }
 
     public Class<T> getaClass() {
