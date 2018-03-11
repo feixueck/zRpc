@@ -12,7 +12,7 @@ public class UserConsumerTest {
     public static void main(String[] args) throws IOException {
         //
         ServiceUrl<UserService> serviceUrl = new ServiceUrl<>();
-        serviceUrl.setaClass(UserService.class);
+        serviceUrl.setClazz(UserService.class);
         serviceUrl.setMethodName("sayHello");
         serviceUrl.setParameters(null);
         //

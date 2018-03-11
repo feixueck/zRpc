@@ -23,4 +23,12 @@ public class ZConstants {
     //logger
     private static final String logger_name = "zRpc";
     public static final Logger LOGGER = LoggerFactory.getLogger(logger_name);
+
+    //获取对象的path
+    public static String getPathOfClazz(Class<?> clazz, String otherInfo) {
+        if (clazz == null) {
+            return "null";
+        }
+        return ZKPaths.makePath(ZConstants.RPC_ROOT_PATH, clazz.getSimpleName(), otherInfo);
+    }
 }

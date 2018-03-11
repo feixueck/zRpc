@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class ServiceUrl<T> implements Serializable {
     //
-    private Class<T> aClass;
+    private Class<T> clazz;
     //
     private String methodName;
 
@@ -17,15 +17,15 @@ public class ServiceUrl<T> implements Serializable {
     //
     public String getPath() {
         //
-        return ZKPaths.makePath(ZConstants.RPC_ROOT_PATH, aClass.getSimpleName());
+        return ZKPaths.makePath(ZConstants.RPC_ROOT_PATH, clazz.getSimpleName());
     }
 
-    public Class<T> getaClass() {
-        return aClass;
+    public Class<T> getClazz() {
+        return clazz;
     }
 
-    public void setaClass(Class<T> aClass) {
-        this.aClass = aClass;
+    public void setClazz(Class<T> clazz) {
+        this.clazz = clazz;
     }
 
     public String getMethodName() {
