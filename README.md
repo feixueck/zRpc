@@ -1,5 +1,6 @@
 # zRpc
-zookeeper+rpc+netty  this is a test project now ,hope to build a product later
+zookeeper+rpc+netty  , a simple and more performance rpc tool . welcome to use . 
+any problems please link to : feixueck@126.com
 
 ## system structure pic
 
